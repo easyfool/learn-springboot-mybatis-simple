@@ -20,6 +20,7 @@ public class UserDao4Ds1Test {
     @Test
     public void testSelect() {
         User queryUser = new User();
+        userDao4Ds1.update(queryUser);
         List<User> users = userDao4Ds1.queryAll(queryUser);
         System.out.println(users);
 

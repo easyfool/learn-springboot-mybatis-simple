@@ -1,5 +1,7 @@
 package com.github.wangfeng.learn.springboot.mybatis.single.service.impl;
 
+import com.github.wangfeng.learn.springboot.mybatis.single.config.DataSource;
+import com.github.wangfeng.learn.springboot.mybatis.single.config.DataSourceType;
 import com.github.wangfeng.learn.springboot.mybatis.single.entity.ds1.User;
 import com.github.wangfeng.learn.springboot.mybatis.single.dao.ds1.UserDao4Ds1;
 import com.github.wangfeng.learn.springboot.mybatis.single.service.UserService4Ds1;
@@ -62,6 +64,7 @@ public class UserService4Ds1Impl implements UserService4Ds1 {
      * @return 实例对象
      */
     @Override
+    @DataSource(DataSourceType.db1)
     public User update(User user) {
         this.userDao.update(user);
         return this.queryById(user.getId());
@@ -78,7 +81,7 @@ public class UserService4Ds1Impl implements UserService4Ds1 {
         return this.userDao.deleteById(id) > 0;
     }
 
-    @Transactional(value = "ds1TransactionManager", rollbackFor = RuntimeException.class)
+    @Transactional(rollbackFor = RuntimeException.class)
     @Override
     public void transaction1() {
         User user = new User();
@@ -90,11 +93,9 @@ public class UserService4Ds1Impl implements UserService4Ds1 {
         user1.setName("新增1");
         user1.setAge(23);
         userDao.insert(user1);
-        try {
-            mockException();
-        } catch (RuntimeException e) {
 
-        }
+        mockException();
+
     }
 
     @Override

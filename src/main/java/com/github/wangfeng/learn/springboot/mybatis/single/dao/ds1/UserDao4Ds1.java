@@ -1,8 +1,13 @@
 package com.github.wangfeng.learn.springboot.mybatis.single.dao.ds1;
 
+import com.github.wangfeng.learn.springboot.mybatis.single.config.DataSource;
+import com.github.wangfeng.learn.springboot.mybatis.single.config.DataSourceType;
 import com.github.wangfeng.learn.springboot.mybatis.single.entity.ds1.User;
+import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
+import org.springframework.stereotype.Repository;
 
+import java.lang.annotation.Retention;
 import java.util.List;
 
 /**
@@ -11,6 +16,8 @@ import java.util.List;
  * @author makejava
  * @since 2020-03-03 08:27:38
  */
+@Mapper
+@Repository
 public interface UserDao4Ds1 {
 
     /**
@@ -53,6 +60,7 @@ public interface UserDao4Ds1 {
      * @param user 实例对象
      * @return 影响行数
      */
+    @DataSource(value = DataSourceType.db1)
     int update(User user);
 
     /**
