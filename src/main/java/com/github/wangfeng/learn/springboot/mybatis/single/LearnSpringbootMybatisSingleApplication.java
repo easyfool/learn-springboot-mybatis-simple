@@ -19,24 +19,23 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 import javax.sql.DataSource;
 
-@SpringBootApplication
+@SpringBootApplication(exclude = DataSourceAutoConfiguration.class)
 @EnableTransactionManagement
-@MapperScan(basePackages = {"com.github.wangfeng.learn.springboot.mybatis.single.mapper"})
 @ServletComponentScan
 public class LearnSpringbootMybatisSingleApplication {
 
 
-    @Bean
-    public PlatformTransactionManager txManager(DataSource dataSource) {
-        System.out.println(dataSource.getClass().getName());//HickariCP
-        return new DataSourceTransactionManager(dataSource);
-    }
-
-    @Bean
-    public Object testBean(PlatformTransactionManager platformTransactionManager) {
-        System.out.println(">>>>>>>>>>" + platformTransactionManager.getClass().getName());
-        return new Object();
-    }
+//    @Bean
+//    public PlatformTransactionManager txManager(DataSource dataSource) {
+//        System.out.println(dataSource.getClass().getName());//HickariCP
+//        return new DataSourceTransactionManager(dataSource);
+//    }
+//
+//    @Bean
+//    public Object testBean(PlatformTransactionManager platformTransactionManager) {
+//        System.out.println(">>>>>>>>>>" + platformTransactionManager.getClass().getName());
+//        return new Object();
+//    }
 
     public static void main(String[] args) {
         SpringApplication.run(LearnSpringbootMybatisSingleApplication.class, args);

@@ -3,67 +3,40 @@ server:
 
 spring:
   datasource:
-    type: com.alibaba.druid.pool.DruidDataSource
-    name: mybatis
-    url: jdbc:mysql://127.0.0.1:3306/mybatis?serverTimezone=GMT%2B8&useUnicode=true&characterEncoding=utf-8
-    username: root
-    password: root
-    driver-class-name: com.mysql.cj.jdbc.Driver
-    druid:
-      #初始化时建立物理连接的个数
-      initial-size: 5
-      #最小连接池数量
-      min-idle: 5
-      #最大连接池数量 maxIdle已经不再使用
-      max-active: 20
-      #获取连接时最大等待时间，单位毫秒
-      max-wait: 60000
-      #申请连接的时候检测，如果空闲时间大于timeBetweenEvictionRunsMillis，执行validationQuery检测连接是否有效。
-      test-while-idle: true
-      #既作为检测的间隔时间又作为testWhileIdel执行的依据
-      time-between-eviction-runs-millis: 60000
-      #销毁线程时检测当前连接的最后活动时间和当前时间差大于该值时，关闭当前连接
-      min-evictable-idle-time-millis: 30000
-      #用来检测连接是否有效的sql 必须是一个查询语句
-      #mysql中为 select 'x'
-      #oracle中为 select 1 from dual
-      validation-query: select 'x'
-      #申请连接时会执行validationQuery检测连接是否有效,开启会降低性能,默认为true
-      test-on-borrow: false
-      #归还连接时会执行validationQuery检测连接是否有效,开启会降低性能,默认为true
-      test-on-return: false
-      #当数据库抛出不可恢复的异常时,抛弃该连接
-#      exception-sorter: true
-      #是否缓存preparedStatement,mysql5.5+建议开启
-      pool-prepared-statements: true
-      #当值大于0时poolPreparedStatements会自动修改为true
-      max-pool-prepared-statement-per-connection-size: 20
-      #配置扩展插件
-      filters: stat,wall,slf4j
-      #通过connectProperties属性来打开mergeSql功能；慢SQL记录
-      connection-properties: druid.stat.mergeSql=true;druid.stat.slowSqlMillis=5000
-      #合并多个DruidDataSource的监控数据
-      use-global-data-source-stat: true
-      web-stat-filter:
-        enabled: true #是否启用StatFilter默认值true
-        url-pattern: /*
-        exclusions: /druid/*,*.js,*.gif,*.jpg,*.bmp,*.png,*.css,*.ico
-        session-stat-enable: true
-        session-stat-max-count: 10
-        #StatViewServlet配置，说明请参考Druid Wiki，配置_StatViewServlet配置
-      stat-view-servlet:
-        enabled: true #是否启用StatViewServlet默认值true
-        url-pattern: /druid/*
-        reset-enable: true
-        login-username: admin
-        login-password: admin
-
-
+    ds1:
+      type: com.zaxxer.hikari.HikariDataSource
+      url: jdbc:mysql://127.0.0.1:3306/test1?serverTimezone=GMT%2B8&useUnicode=true&characterEncoding=utf-8
+      username: root
+      password: root
+      driver-class-name: com.mysql.cj.jdbc.Driver
+    ds2:
+      type: com.zaxxer.hikari.HikariDataSource
+      url: jdbc:mysql://127.0.0.1:3306/test2?serverTimezone=GMT%2B8&useUnicode=true&characterEncoding=utf-8
+      username: root
+      password: root
+      driver-class-name: com.mysql.cj.jdbc.Driver
+    # Hikari 连接池配置
+    # 最小空闲连接数量
+    hikari:
+      minimum-idle: 5
+      # 空闲连接存活最大时间，默认600000（10分钟）
+      idle-timeout: 180000
+      # 连接池最大连接数，默认是10
+      maximum-pool-size: 10
+      # 此属性控制从池返回的连接的默认自动提交行为,默认值：true
+      auto-commit: true
+      # 连接池名称
+      pool-name: MyHikariCP
+      # 此属性控制池中连接的最长生命周期，值0表示无限生命周期，默认1800000即30分钟
+      max-lifetime: 1800000
+      # 数据库连接超时时间,默认30秒，即30000
+      connection-timeout: 30000
+      connection-test-query: SELECT 1
 
 #这里的mybatis下面要用到，现在不用
-mybatis:
-  mapper-locations: classpath:mapper/*.xml  #注意：一定要对应mapper映射xml文件的所在路径
-  type-aliases-package: com.github.wangfeng.learn.springboot.mybatis.single.po.entity  # 注意：对应实体类的路径，改成自己的
+#mybatis:
+#  mapper-locations: classpath:mapper/*.xml  #注意：一定要对应mapper映射xml文件的所在路径
+#  type-aliases-package: com.github.wangfeng.learn.springboot.mybatis.single.po.entity  # 注意：对应实体类的路径，改成自己的
 #  check-config-location: true
 #  config-location: classpath:mybatis/mybatis-config.xml
 
@@ -71,3 +44,4 @@ mybatis:
 logging:
   level:
     com.github.wangfeng.learn.springboot.mybatis.single.mapper: TRACE
+    com.github.wangfeng.learn.springboot.mybatis.single.dao: TRACE

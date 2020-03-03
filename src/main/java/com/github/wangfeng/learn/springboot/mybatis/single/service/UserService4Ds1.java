@@ -1,18 +1,16 @@
 package com.github.wangfeng.learn.springboot.mybatis.single.service;
 
-import com.github.wangfeng.learn.springboot.mybatis.single.po.entity.CountryDO;
+import com.github.wangfeng.learn.springboot.mybatis.single.entity.ds1.User;
 
 import java.util.List;
 
 /**
- * (CountryDO)表服务接口
+ * (User)表服务接口
  *
  * @author makejava
- * @since 2020-03-01 22:28:19
+ * @since 2020-03-03 08:27:38
  */
-public interface CountryService {
-
-    void propagationRequired();
+public interface UserService4Ds1 {
 
     /**
      * 通过ID查询单条数据
@@ -20,7 +18,7 @@ public interface CountryService {
      * @param id 主键
      * @return 实例对象
      */
-    CountryDO queryById(Object id);
+    User queryById(Long id);
 
     /**
      * 查询多条数据
@@ -29,23 +27,23 @@ public interface CountryService {
      * @param limit  查询条数
      * @return 对象列表
      */
-    List<CountryDO> queryAllByLimit(int offset, int limit);
+    List<User> queryAllByLimit(int offset, int limit);
 
     /**
      * 新增数据
      *
-     * @param country 实例对象
+     * @param user 实例对象
      * @return 实例对象
      */
-    CountryDO insert(CountryDO country);
+    User insert(User user);
 
     /**
      * 修改数据
      *
-     * @param country 实例对象
+     * @param user 实例对象
      * @return 实例对象
      */
-    CountryDO update(CountryDO country);
+    User update(User user);
 
     /**
      * 通过主键删除数据
@@ -53,6 +51,11 @@ public interface CountryService {
      * @param id 主键
      * @return 是否成功
      */
-    boolean deleteById(Object id);
+    boolean deleteById(Long id);
+
+    void transaction1();
+
+    void mockException();
+
 
 }
